@@ -1,1 +1,1 @@
-__all__ = ['IMMDCM', 'WEDCM']
+__all__ = ['IMMDCM', 'WEDCM', 'LKDCM']

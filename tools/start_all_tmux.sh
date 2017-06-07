@@ -49,36 +49,18 @@ else
 fi
 
 declare -a commandcenter=("CMD" "$(pwd)/../lucida/commandcenter/")
-declare -a questionanswering=("QA" "$(pwd)/../lucida/questionanswering/OpenEphyra/")
-declare -a imagematching=("IMM" "$(pwd)/../lucida/imagematching/opencv_imm/")
-declare -a calendar=("CA" "$(pwd)/../lucida/calendar/")
-declare -a speechrecognition=("ASR" "$(pwd)/../lucida/speechrecognition/kaldi_gstreamer_asr/")
-declare -a imageclassification=("IMC" "$(pwd)/../lucida/djinntonic/imc/")
-declare -a digitrecognition=("DIG" "$(pwd)/../lucida/djinntonic/dig/")
-declare -a facerecognition=("FACE" "$(pwd)/../lucida/djinntonic/face")
-declare -a weather=("WE" "$(pwd)/../lucida/weather")
-declare -a botframework=("BFI" "$(pwd)/../lucida/botframework-interface")
-declare -a musicservice=("MS" "$(pwd)/../lucida/musicservice")
+declare -a lanekeeping=("LK" "$(pwd)/../lucida/lanekeeping")
 
 if [ "$1" == "test" ]; then
     declare -a services=(
         )
 else
     declare -a services=(
-        commandcenter
-        speechrecognition)
+        commandcenter)
 fi
 
 services+=(
-    questionanswering
-    imagematching
-    calendar
-    imageclassification
-    digitrecognition
-    facerecognition
-    weather
-    botframework
-    musicservice)
+    lanekeeping)
 
 # Create the session
 tmux new-session -s ${SESSION_NAME} -d

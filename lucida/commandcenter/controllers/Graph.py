@@ -37,7 +37,8 @@ class Graph(object):
             for to_index in curr_node.to_indices:
                 to_node = self.get_node(to_index)
                 if to_node in has_seen:
-                    if 'DCM' not in curr_node.service_name:
+                    if 'DCM' not in to_node.service_name and \
+                    'DCM' not in curr_node.service_name:
                         print 'Invalid graph: cyclic without decision node'
                         exit()
                 else:

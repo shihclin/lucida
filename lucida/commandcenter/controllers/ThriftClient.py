@@ -89,9 +89,10 @@ class ThriftClient(object):
             service = self.SERVICES[node.service_name]
             # Worker Service nodes
             if service.name == "DCM":
-                # Call DAG until DCM node
-                result = self.send_query(LUCID, service_graph, start_index, query_input_list)
-                response_data['text'].append(result)
+                if query_input_list:
+                    # Call DAG until DCM node
+                    result = self.send_query(LUCID, service_graph, start_index, query_input_list)
+                    response_data['text'].append(result)
                 # Make a decision using the DCM logic method
                 service.decision.logic_method(response_data, service_graph, node)
                 start_index = service.decision.next_node
