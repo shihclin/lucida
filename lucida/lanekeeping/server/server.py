@@ -78,7 +78,7 @@ class TemplateHandler(LucidaService.Iface):
                 elif query_data == 'power off':
                     power = 'off'
                 LK_SYSTEM[LUCID]['lk_system']['power'] = power
-                answer_data = 'Okay, your lane keeping system in now %s.' %(power)
+                answer_data = 'Okay, your lane keeping system is now %s.' %(power)
 
             # Vibration Commands
             elif 'vibration' in query_data:

@@ -8,6 +8,7 @@ LK_INFO = OrderedDict([
     ('red', 'Red lanes mean you are drifiting out of your lane so your wheel vibrates to warn you.'),
     ('yellow', 'Yellow lanes mean you are starting to drift so your wheel will turn back to your lane.'),
     ('gray', 'Gray lanes mean either you are driving under the minimum speed threshold or the road lane markings are not visible.'),
+    ('green', 'Green lanes mean your lane keeping system is on and ready to go.'),
     ('no lane', 'No lanes mean your lane keeping system is off. Would you like me to turn it on?'),
     ('aid', 'Aid mode warns you when you are starting to drift out of your lane.'),
     ('alert', 'Alert mode warns you when you are drifting out of your lane.'),
@@ -17,27 +18,28 @@ LK_INFO = OrderedDict([
 
 # Slots that can be extracted for informational queries
 INFO_SLOTS = {
-        'red':r"\bred(ish)?\b",
-        'yellow':r"\byellow(ish)?\b",
-        'gray':r"gray(ish)?|grey(ish)?",
-        'no lane':r'(\bno\b|\bnot\b|\bany\b) (\blane(s)?\b( markings)?|\bline(s)?\b( markings)?)',
-        'aid':r'\baid\b',
-        'alert':r'\balert\b',
-        'lane':r'\blane(s)?\b( markings)?|\bline(s)?\b( markings)?',
-        'vibration':r'\bvibrate\b|\bvibration\b',
-        'alerting':r'warning|alerting|vibrating'
+        'red':r'(?i)\bred(ish)?\b',
+        'yellow':r'(?i)\byellow(ish)?\b',
+        'gray':r'(?i)gray(ish)?|grey(ish)?',
+        'green':r'(?i)green(ish)?',
+        'no lane':r'(?i)(\bno\b|\bnot\b|\bany\b) (\blane(s)?\b( markings)?|\bline(s)?\b( markings)?)',
+        'aid':r'(?i)\baid\b',
+        'alert':r'(?i)\balert\b',
+        'lane':r'(?i)\blane(s)?\b( markings)?|\bline(s)?\b( markings)?',
+        'vibration':r'(?i)\bvibrate\b|\bvibrations?\b',
+        'alerting':r'(?i)warning|alerting|vibrating'
 }
 
 # Slots that can be extracted for command queries
 CMD_SLOTS = {
-        'up':r'increase|\bup\b',
-        'down':r'decrease|\bdown\b',
-        'on':r'\bon\b|running|working|start',
-        'off':r'\boff\b|not (running|working)|stop',
+        'up':r'(?i)increase|\bup\b',
+        'down':r'(?i)decrease|\bdown\b',
+        'on':r'(?i)\bon\b|running|working|start',
+        'off':r'(?i)\boff\b|not (running|working)|stop',
         'yes':r'(?i)\byes\b|\bokay\b|\bsure\b|\byeah?\b',
         'no':r'(?i)\bno\b|\bnope\b|nah\b',
-        'vibration':r'vibrate|vibration|vibrating',
-        'lane':r'\blane(s)?\b( \bmarkings\b)?|\bline(s)?\b( \bmarkings\b)?',
+        'vibration':r'(?i)vibrate|vibration|vibrating',
+        'lane':r'(?i)\blane(s)?\b( \bmarkings\b)?|\bline(s)?\b( \bmarkings\b)?',
         'change':r'(?i)change|\bturn\b|increase|decrease'
 }
 
@@ -66,7 +68,7 @@ CMD_MAP = OrderedDict([
 # Two classifier groups
 # TODO: Ideally, we want to create an actual classifier instead of using regex
 CLASSIFIER = OrderedDict([
-        ('info', r'\bmean\b|\bwork\b|\babout\b|\bwhy\b'),
+        ('info', r'(?i)\bmean\b|\bwork\b|\babout\b|\bwhy\b'),
         ('cmd', r'\w')])
 
 # Default answer when we are unsure how to handle a case
@@ -88,9 +90,7 @@ class LKDCM(Decision):
                 return
 
     def _extract_info(self, query):
-        print query
         for key in INFO_SLOTS:
-            print INFO_SLOTS[key]
             if re.search(INFO_SLOTS[key], query):
                 self.slots.append(key)
 
